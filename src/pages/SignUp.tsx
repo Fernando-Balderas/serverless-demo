@@ -56,7 +56,7 @@ function SignUp() {
           placeholder="Confirm password"
           {...bindConfirmPassword}
         />
-        <button type="submit">
+        <button type="submit" disabled={loading}>
           Sign Up
           {loading && 'Loading...'}
         </button>
