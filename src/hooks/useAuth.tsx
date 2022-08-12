@@ -4,7 +4,7 @@ import { LOCALSTORAGE_TOKEN, LOCALSTORAGE_USER } from '../utils/constants'
 type Children = { children: ReactNode }
 
 type User = {
-  [key: string]: string
+  [key: string]: any
 }
 
 type UserOrNull = Partial<User> | null
@@ -67,6 +67,8 @@ function useAuth() {
     },
     setUser(user: UserOrNull) {
       return new Promise<void>((res) => {
+        console.log('into setUser ', user)
+        setAuthed(true)
         setUser(user)
         localStorage.setItem(LOCALSTORAGE_USER, JSON.stringify(user))
         res()

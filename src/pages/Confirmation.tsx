@@ -20,7 +20,7 @@ function Confirmation() {
       console.log('Verified successfully ')
       history.push('/signin')
     } catch (error: any) {
-      console.warn(error.message || '')
+      console.warn(error.message || 'Error')
     }
     setLoading(false)
   }
