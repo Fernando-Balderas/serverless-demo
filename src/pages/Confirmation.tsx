@@ -13,11 +13,10 @@ function Confirmation() {
 
   const handleSubmit = async (e: SyntheticEvent<Element, Event>) => {
     e.preventDefault()
-    console.log('handling submit')
     setLoading(true)
     try {
       await Auth.confirmSignUp(toUsername(email), code)
-      console.log('Verified successfully ')
+      console.log('Verified successfully')
       history.push('/signin')
     } catch (error: any) {
       console.warn(error.message || 'Error')

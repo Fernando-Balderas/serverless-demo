@@ -17,7 +17,7 @@ function SignIn() {
     setLoading(true)
     try {
       const user = await Auth.signIn(email, password)
-      console.log('Login successfully', user)
+      console.log('Login successfully')
       await localAuth.setUser(user)
       history.push('/')
     } catch (error: any) {

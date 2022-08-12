@@ -17,13 +17,13 @@ function SignUp() {
 
   const handleSubmit = async (e: SyntheticEvent<Element, Event>) => {
     e.preventDefault()
-    console.log('handling submit')
     setLoading(true)
 
     if (password !== confirmPassword) {
       console.warn("Passwords don't match")
       return
     }
+
     try {
       await Auth.signUp({
         username: toUsername(email),
@@ -35,13 +35,14 @@ function SignUp() {
           'custom:company': company,
         },
       })
-      console.log('Signup success')
+      console.log('Signup successfully')
       history.push('/confirmation')
     } catch (error: any) {
       console.warn(error.message || 'Error')
     }
     setLoading(false)
   }
+
   return (
     <>
       <h1>SignUp</h1>
