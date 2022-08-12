@@ -1,27 +1,18 @@
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useLocation } from 'react-router-dom'
 import PrivateRoute from '../helpers/PrivateRoute'
-
-const SignUp = () => {
-  return <h1>SignUp</h1>
-}
-
-const SignIn = () => {
-  return <h1>SignIn</h1>
-}
-
-const Dashboard = () => {
-  return <h1>Dashboard</h1>
-}
-
-const NotFound = () => {
-  return <h1>NotFound</h1>
-}
+import SignUp from 'src/pages/SignUp'
+import SignIn from 'src/pages/SignIn'
+import Dashboard from 'src/pages/Dashboard'
+import Confirmation from 'src/pages/Confirmation'
+import NotFound from 'src/pages/NotFound'
 
 function Routes() {
+  let location = useLocation()
   return (
-    <Switch>
+    <Switch location={location}>
       <Route exact path="/signin" component={SignIn} />
       <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/confirmation" component={Confirmation} />
       <PrivateRoute exact path="/">
         <Dashboard />
       </PrivateRoute>
