@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { API_URL } from '../../util/secrets'
-import { LOCALSTORAGE_TOKEN } from '../../util/constants'
+import { API_URL } from '../../utils/secrets'
+import { LOCALSTORAGE_TOKEN } from '../../utils/constants'
 
 type Config = {
   headers?: {

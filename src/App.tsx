@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import { Amplify } from 'aws-amplify'
-import { cognito } from 'src/util/secrets'
+import { cognito } from 'src/utils/secrets'
 // import logo from './logo.svg'
 // import { Counter } from './features/counter/Counter'
 import Routes from './routes/Routes'

@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
-import { LOCALSTORAGE_TOKEN, LOCALSTORAGE_USER } from '../util/constants'
+import { LOCALSTORAGE_TOKEN, LOCALSTORAGE_USER } from '../utils/constants'
 
 type Children = { children: ReactNode }
 
