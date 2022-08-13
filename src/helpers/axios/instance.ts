@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_URL } from '../../utils/secrets'
-import { LOCALSTORAGE_TOKEN } from '../../utils/constants'
+// import { LOCALSTORAGE_TOKEN } from '../../utils/constants'
 
 type Config = {
   headers?: {
@@ -18,11 +18,10 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config: Config) => {
     // Do something before request is sent
-    if (!config.headers?.common?.['Authorization']) {
-      const token = localStorage.getItem(LOCALSTORAGE_TOKEN)
-      if (token)
-        instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    }
+    // if (!config.headers?.common?.['Authorization']) {
+    //   const token = localStorage.getItem(LOCALSTORAGE_TOKEN)
+    //   if (token) instance.defaults.headers.common['Authorization'] = `${token}`
+    // }
     return config
   },
   (error) => {

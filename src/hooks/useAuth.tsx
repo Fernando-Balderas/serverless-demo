@@ -4,6 +4,12 @@ import { LOCALSTORAGE_TOKEN, LOCALSTORAGE_USER } from '../utils/constants'
 type Children = { children: ReactNode }
 
 type User = {
+  signInUserSession: {
+    idToken: { jwtToken: string }
+    refreshToken: { token: string }
+    accessToken: { jwtToken: string }
+    clockDrift: number
+  }
   [key: string]: any
 }
 
@@ -67,7 +73,7 @@ function useAuth() {
     },
     setUser(user: UserOrNull) {
       return new Promise<void>((res) => {
-        console.log('into setUser ', user)
+        console.log('into setUser ', user?.signInUserSession)
         setAuthed(true)
         setUser(user)
         localStorage.setItem(LOCALSTORAGE_USER, JSON.stringify(user))

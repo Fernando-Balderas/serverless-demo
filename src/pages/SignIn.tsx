@@ -17,11 +17,13 @@ function SignIn() {
     setLoading(true)
     try {
       const user = await Auth.signIn(email, password)
-      console.log('Login successfully')
+      const token = user.signInUserSession.idToken.jwtToken || ''
+      console.log('Login successfully ')
       await localAuth.setUser(user)
+      await localAuth.login(token)
       history.push('/')
     } catch (error: any) {
-      console.warn(error.message || 'Error')
+      console.warn(error?.message || 'Error')
     }
     setLoading(false)
   }
