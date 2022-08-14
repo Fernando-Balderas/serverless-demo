@@ -3,39 +3,35 @@ import SignOutBtn from 'src/components/SignOutBtn'
 import axiosi from 'src/helpers/axios/instance'
 import useAuth from 'src/hooks/useAuth'
 
-type Rides = {
+type Bookings = {
   Count: number
-  Items: Ride[]
+  Items: Booking[]
 }
 
-type Ride = {
-  RideId: string
-  UnicornName: string
-  User: string
-  Unicorn: Unicorn
-}
-
-type Unicorn = {
-  Name: string
-  Color: string
-  Gender: string
+type Booking = {
+  BookingId: string
+  CheckIn: string
+  CheckOut: string
+  GuestName: string
+  Guests: number
+  Rooms: number
 }
 
 function Dashboard() {
   const localAuth = useAuth()
   const [loading, setLoading] = useState(false)
-  const [rides, setRides] = useState<Rides>({ Count: 0, Items: [] })
+  const [bookings, setBookings] = useState<Bookings>({ Count: 0, Items: [] })
 
   const handleClick = async () => {
     console.log('handling click')
     setLoading(true)
     try {
-      const res = await axiosi.get('/ride', {
+      const res = await axiosi.get('/bookings', {
         headers: {
           Authorization: localAuth.accessToken,
         },
       })
-      setRides(res.data)
+      setBookings(res.data)
       console.log('response ', res.data)
     } catch (error: any) {
       console.warn(error.message || 'Error')
@@ -48,14 +44,14 @@ function Dashboard() {
       <SignOutBtn />
       <h1>Dashboard</h1>
       <button type="button" disabled={loading} onClick={handleClick}>
-        Get Rides
+        Get Bookings
       </button>
-      {/* <button type="button">New Ride</button> */}
+      {/* <button type="button">New Booking</button> */}
       <ul>
-        {rides.Count > 0 &&
-          rides.Items.map((ride) => (
-            <li key={ride.RideId}>
-              {ride.UnicornName}
+        {bookings.Count > 0 &&
+          bookings.Items.map((booking) => (
+            <li key={booking.BookingId}>
+              {booking.GuestName}
               {/* <button type="button">Edit</button> */}
               {/* <button type="button">Delete</button> */}
             </li>
