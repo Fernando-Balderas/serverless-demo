@@ -1,3 +1,5 @@
+import { SyntheticEvent } from 'react'
+
 export type TBookings = {
   Count: number
   Items: TBooking[]
@@ -11,3 +13,5 @@ export type TBooking = {
   Guests: number
   Rooms: number
 }
+
+export type SubmitFn = (e: SyntheticEvent<Element, Event>) => void

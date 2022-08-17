@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
-const useInput = (initialValue: string) => {
+function useInput<T>(initialValue: T) {
   const [value, setValue] = useState(initialValue)
 
   return {
     value,
     setValue,
-    reset: () => setValue(''),
+    reset: () => setValue(initialValue),
     bind: {
       value,
       onChange: (event: React.SyntheticEvent<Element, Event>) => {
