@@ -4,13 +4,15 @@ import useAuth from 'src/hooks/useAuth'
 import { useAppDispatch, useAppSelector } from 'src/app/hooks'
 import { selectBookings, setBookings } from './bookingsSlice'
 import axiosi from 'src/helpers/axios/instance'
+import { TBooking } from 'src/types'
 
 function Bookings() {
   const localAuth = useAuth()
   const dispatch = useAppDispatch()
   const bookings = useAppSelector(selectBookings)
   const [loading, setLoading] = useState(false)
-  // const [showForm, setShowForm] = useState(false)
+  const [showForm, setShowForm] = useState(false)
+  const [updateBooking, setUpdateBooking] = useState<TBooking | null>(null)
 
   const handleGetAll = async () => {
     setLoading(true)
@@ -28,6 +30,11 @@ function Bookings() {
     setLoading(false)
   }
 
+  const handleUpdate = (booking: TBooking) => {
+    setUpdateBooking(booking)
+    setShowForm(true)
+  }
+
   const handleDelete = async (bookingId: string) => {
     console.log('into handleDelete ', bookingId)
     setLoading(true)
@@ -43,16 +50,28 @@ function Bookings() {
     }
     setLoading(false)
   }
+
+  const hideForm = () => {
+    setShowForm(false)
+    setUpdateBooking(null)
+  }
+
   return (
     <>
       <h2>Bookings</h2>
       <button type="button" disabled={loading} onClick={handleGetAll}>
         Get Bookings
       </button>
-      {/* <button type="button" disabled={loading} onClick={handleCreate}>
-        New Booking
-      </button> */}
-      <BookingForm />
+      {!showForm && (
+        <button
+          type="button"
+          disabled={loading}
+          onClick={() => setShowForm(true)}
+        >
+          New Booking
+        </button>
+      )}
+      {showForm && <BookingForm booking={updateBooking} hideForm={hideForm} />}
       <ul>
         {bookings.Count <= 0 && 'No bookings'}
         {bookings.Count > 0 &&
@@ -62,7 +81,7 @@ function Bookings() {
               <button
                 type="button"
                 disabled={loading}
-                // onClick={() => handleUpdate(booking)}
+                onClick={() => handleUpdate(booking)}
               >
                 Edit
               </button>

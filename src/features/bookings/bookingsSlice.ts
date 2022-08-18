@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TBookings } from 'src/types'
+import { TBooking, TBookings } from 'src/types'
 import axiosi from 'src/helpers/axios/instance'
 import { RootState } from 'src/app/store'
 
@@ -26,6 +26,16 @@ export const bookingsSlice = createSlice({
     setBookings: (state, action: PayloadAction<TBookings>) => {
       state.bookings = action.payload
     },
+    setUpdatedBooking: (state, action: PayloadAction<Partial<TBooking>>) => {
+      const index = state.bookings.Items.findIndex(
+        (booking) => booking.BookingId === action.payload.BookingId
+      )
+      if (index === -1) return
+      state.bookings.Items[index] = {
+        ...state.bookings.Items[index],
+        ...action.payload,
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -42,7 +52,7 @@ export const bookingsSlice = createSlice({
   },
 })
 
-export const { setBookings } = bookingsSlice.actions
+export const { setBookings, setUpdatedBooking } = bookingsSlice.actions
 
 export const selectBookings = (state: RootState) => state.bookings.bookings
 
