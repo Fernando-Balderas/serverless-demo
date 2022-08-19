@@ -48,14 +48,17 @@ exports.handler = async (event, context) => {
             Item: {
               BookingId: bookingId,
               GuestName: requestBody.GuestName,
-              CheckIn: new Date().toISOString(),
-              CheckOut: new Date().toISOString(),
+              CheckIn: requestBody.CheckIn || new Date().toISOString(),
+              CheckOut: requestBody.CheckOut || new Date().toISOString(),
               Guests: requestBody.Guests,
               Rooms: requestBody.Rooms
             }
           })
           .promise();
-        body = `Successfully created booking ${bookingId}`;
+        body = {
+          Message: `Successfully created booking`,
+          BookingId: bookingId
+        };
         break;
       case "PUT":
         let update = JSON.parse(event.body);
@@ -72,7 +75,10 @@ exports.handler = async (event, context) => {
             }
           })
           .promise();
-        body = `Successfully updated booking ${update.BookingId}`;
+        body = {
+          Message: `Successfully updated booking`,
+          BookingId: update.BookingId
+        };
         break;
       case "DELETE":
         await dynamo
@@ -83,7 +89,10 @@ exports.handler = async (event, context) => {
             }
           })
           .promise();
-        body = `Successfully deleted booking ${event.pathParameters.bookingid}`;
+        body = {
+          Message: `Successfully deleted booking`,
+          BookingId: event.pathParameters.bookingid
+        };
         break;
       default:
         throw new Error(`Unsupported route: "${event.httpMethod}"`);

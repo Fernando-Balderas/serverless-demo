@@ -4,6 +4,7 @@ import { SubmitFn, TBooking } from 'src/types'
 import useAuth from 'src/hooks/useAuth'
 import { useAppDispatch } from 'src/app/hooks'
 import { setUpdatedBooking } from 'src/features/bookings/bookingsSlice'
+import { ISOToLocal } from 'src/utils/dateTime'
 
 type BookingFormProps = {
   booking: TBooking | null
@@ -21,6 +22,12 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
   } = useInput(booking?.GuestName || '')
   const { value: guests, bind: bindGuests } = useInput(booking?.Guests || 1)
   const { value: rooms, bind: bindRooms } = useInput(booking?.Rooms || 1)
+  const { value: checkIn, bind: bindCheckIn } = useInput(
+    ISOToLocal(booking?.CheckIn || new Date().toISOString())
+  )
+  const { value: checkOut, bind: bindCheckOut } = useInput(
+    ISOToLocal(booking?.CheckOut || new Date().toISOString())
+  )
 
   const handleCreate: SubmitFn = async (e) => {
     e.preventDefault()
@@ -29,6 +36,8 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
         '/bookings',
         {
           GuestName: guestName,
+          CheckIn: new Date(checkIn).toISOString(),
+          CheckOut: new Date(checkOut).toISOString(),
           Guests: guests,
           Rooms: rooms,
         },
@@ -52,6 +61,8 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
       const updatedBooking: Partial<TBooking> = {
         BookingId: booking?.BookingId,
         GuestName: guestName,
+        CheckIn: new Date(checkIn).toISOString(),
+        CheckOut: new Date(checkOut).toISOString(),
         Guests: guests,
         Rooms: rooms,
       }
@@ -83,6 +94,10 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
       <input type="number" id="guests" placeholder="Guests" {...bindGuests} />
       <label htmlFor="rooms">Rooms:</label>
       <input type="number" id="rooms" placeholder="Rooms" {...bindRooms} />
+      <label htmlFor="checkIn">Check In:</label>
+      <input type="datetime-local" id="checkIn" {...bindCheckIn} />
+      <label htmlFor="checkOut">Check Out:</label>
+      <input type="datetime-local" id="checkOut" {...bindCheckOut} />
       <button type="button" onClick={() => hideForm()}>
         Cancel
       </button>
