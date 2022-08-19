@@ -2,7 +2,7 @@ import { useState } from 'react'
 import BookingForm from 'src/components/BookingForm'
 import useAuth from 'src/hooks/useAuth'
 import { useAppDispatch, useAppSelector } from 'src/app/hooks'
-import { selectBookings, setBookings } from './bookingsSlice'
+import { removeBooking, selectBookings, setBookings } from './bookingsSlice'
 import axiosi from 'src/helpers/axios/instance'
 import { TBooking } from 'src/types'
 
@@ -36,7 +36,6 @@ function Bookings() {
   }
 
   const handleDelete = async (bookingId: string) => {
-    console.log('into handleDelete ', bookingId)
     setLoading(true)
     try {
       const res = await axiosi.delete(`bookings/${bookingId}`, {
@@ -45,6 +44,7 @@ function Bookings() {
         },
       })
       console.log('res ', res.data)
+      dispatch(removeBooking(res.data.BookingId))
     } catch (error: any) {
       console.warn(error.message || 'Error')
     }

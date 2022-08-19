@@ -39,6 +39,13 @@ export const bookingsSlice = createSlice({
     pushBooking: (state, action: PayloadAction<TBooking>) => {
       state.bookings.Items.push(action.payload)
     },
+    removeBooking: (state, action: PayloadAction<string>) => {
+      const index = state.bookings.Items.findIndex(
+        (booking) => booking.BookingId === action.payload
+      )
+      if (index === -1) return
+      state.bookings.Items.splice(index, 1)
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,7 +62,7 @@ export const bookingsSlice = createSlice({
   },
 })
 
-export const { setBookings, setUpdatedBooking, pushBooking } =
+export const { setBookings, setUpdatedBooking, pushBooking, removeBooking } =
   bookingsSlice.actions
 
 export const selectBookings = (state: RootState) => state.bookings.bookings
