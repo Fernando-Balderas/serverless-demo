@@ -3,7 +3,10 @@ import axiosi from 'src/helpers/axios/instance'
 import { SubmitFn, TBooking } from 'src/types'
 import useAuth from 'src/hooks/useAuth'
 import { useAppDispatch } from 'src/app/hooks'
-import { setUpdatedBooking } from 'src/features/bookings/bookingsSlice'
+import {
+  pushBooking,
+  setUpdatedBooking,
+} from 'src/features/bookings/bookingsSlice'
 import { ISOToLocal } from 'src/utils/dateTime'
 
 type BookingFormProps = {
@@ -48,6 +51,13 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
         }
       )
       console.log('response ', res.data)
+      const { BookingId } = res.data
+      const res2 = await axiosi.get(`/bookings/${BookingId}`, {
+        headers: {
+          Authorization: localAuth.accessToken,
+        },
+      })
+      dispatch(pushBooking(res2.data.Item))
     } catch (error: any) {
       console.warn(error.message || 'Error')
     }

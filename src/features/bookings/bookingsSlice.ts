@@ -36,6 +36,9 @@ export const bookingsSlice = createSlice({
         ...action.payload,
       }
     },
+    pushBooking: (state, action: PayloadAction<TBooking>) => {
+      state.bookings.Items.push(action.payload)
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,7 +55,8 @@ export const bookingsSlice = createSlice({
   },
 })
 
-export const { setBookings, setUpdatedBooking } = bookingsSlice.actions
+export const { setBookings, setUpdatedBooking, pushBooking } =
+  bookingsSlice.actions
 
 export const selectBookings = (state: RootState) => state.bookings.bookings
 
