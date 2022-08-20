@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from 'src/app/hooks'
 import { removeBooking, selectBookings, setBookings } from './bookingsSlice'
 import axiosi from 'src/helpers/axios/instance'
 import { TBooking } from 'src/types'
+import Typography from '@mui/material/Typography'
 
 function Bookings() {
   const localAuth = useAuth()
@@ -58,7 +59,9 @@ function Bookings() {
 
   return (
     <>
-      <h2>Bookings</h2>
+      <Typography component="h2" variant="h5">
+        Bookings
+      </Typography>
       <button type="button" disabled={loading} onClick={handleGetAll}>
         Get Bookings
       </button>

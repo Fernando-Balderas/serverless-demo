@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -23,9 +24,9 @@ function SignOutBtn() {
   }
 
   return (
-    <button type="button" disabled={loading} onClick={handleSignOut}>
+    <Button type="button" disabled={loading} onClick={handleSignOut}>
       Sign Out
-    </button>
+    </Button>
   )
 }
 
