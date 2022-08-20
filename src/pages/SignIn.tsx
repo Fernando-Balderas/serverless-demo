@@ -1,3 +1,7 @@
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { Auth } from 'aws-amplify'
 import { SyntheticEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -30,15 +34,42 @@ function SignIn() {
 
   return (
     <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="email" {...bindEmail} />
-        <input type="password" {...bindPassword} />
-        <button type="submit" disabled={loading}>
+      <Box
+        component="form"
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Typography component="h1" variant="h5">
+          Sign In
+        </Typography>
+        <TextField
+          type="email"
+          label="Email"
+          margin="normal"
+          autoFocus
+          {...bindEmail}
+        />
+        <TextField
+          type="password"
+          label="Password"
+          margin="normal"
+          {...bindPassword}
+        />
+        <Button
+          type="submit"
+          disabled={loading}
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
           Login
-        </button>
+        </Button>
         <Link to="/signup">Create account &rarr;</Link>
-      </form>
+      </Box>
     </>
   )
 }
