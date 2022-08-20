@@ -1,6 +1,5 @@
 import useInput from 'src/hooks/useInput'
 import axiosi from 'src/helpers/axios/instance'
-import { SubmitFn, TBooking } from 'src/types'
 import useAuth from 'src/hooks/useAuth'
 import { useAppDispatch } from 'src/app/hooks'
 import {
@@ -8,6 +7,11 @@ import {
   setUpdatedBooking,
 } from 'src/features/bookings/bookingsSlice'
 import { ISOToLocal } from 'src/utils/dateTime'
+import Box from '@mui/material/Box'
+import { SubmitFn, TBooking } from 'src/types'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
 
 type BookingFormProps = {
   booking: TBooking | null
@@ -92,27 +96,62 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
   const handleSubmit = booking === null ? handleCreate : handleUpdate
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="guestName">Guest Name:</label>
-      <input
+    <Box
+      component="form"
+      sx={{
+        marginTop: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      onSubmit={handleSubmit}
+    >
+      <TextField
         type="text"
-        id="guestName"
-        placeholder="Guest Name"
+        label="Guest Name"
+        margin="dense"
+        style={{ width: '82.3%' }}
         {...bindGuestName}
       />
-      <label htmlFor="guests">Guests:</label>
-      <input type="number" id="guests" placeholder="Guests" {...bindGuests} />
-      <label htmlFor="rooms">Rooms:</label>
-      <input type="number" id="rooms" placeholder="Rooms" {...bindRooms} />
-      <label htmlFor="checkIn">Check In:</label>
-      <input type="datetime-local" id="checkIn" {...bindCheckIn} />
-      <label htmlFor="checkOut">Check Out:</label>
-      <input type="datetime-local" id="checkOut" {...bindCheckOut} />
-      <button type="button" onClick={() => hideForm()}>
-        Cancel
-      </button>
-      <button type="submit">Submit</button>
-    </form>
+      <div>
+        <TextField
+          type="number"
+          label="Guests"
+          margin="dense"
+          {...bindGuests}
+        />
+        <TextField type="number" label="Rooms" margin="dense" {...bindRooms} />
+      </div>
+      <div>
+        <TextField
+          type="datetime-local"
+          label="Check In"
+          margin="dense"
+          {...bindCheckIn}
+        />
+        <TextField
+          type="datetime-local"
+          label="Check Out"
+          margin="dense"
+          {...bindCheckOut}
+        />
+      </div>
+      <Stack spacing={1} direction="row">
+        <Button
+          type="button"
+          variant="outlined"
+          color="info"
+          onClick={() => hideForm()}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
+      </Stack>
+    </Box>
   )
 }
 

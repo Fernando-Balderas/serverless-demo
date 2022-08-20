@@ -1,8 +1,8 @@
-import Button from '@mui/material/Button'
-import { Auth } from 'aws-amplify'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { Auth } from 'aws-amplify'
 import useAuth from 'src/hooks/useAuth'
+import Button from '@mui/material/Button'
 
 function SignOutBtn() {
   const localAuth = useAuth()

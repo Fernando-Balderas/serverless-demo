@@ -1,11 +1,11 @@
 import { SyntheticEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
 import { Auth } from 'aws-amplify'
 import useInput from 'src/hooks/useInput'
 import { toUsername } from 'src/utils/toUsername'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 function SignUp() {
@@ -92,7 +92,7 @@ function SignUp() {
           Sign Up
           {loading && 'Loading...'}
         </Button>
-        <Link to="/signin">Log In &rarr;</Link>
+        <Link to="/signin">Log in &rarr;</Link>
       </Box>
     </>
   )

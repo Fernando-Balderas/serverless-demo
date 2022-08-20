@@ -4,7 +4,6 @@ import useAuth from 'src/hooks/useAuth'
 import { useAppDispatch, useAppSelector } from 'src/app/hooks'
 import { removeBooking, selectBookings, setBookings } from './bookingsSlice'
 import axiosi from 'src/helpers/axios/instance'
-import { TBooking } from 'src/types'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
@@ -14,6 +13,7 @@ import ListItemText from '@mui/material/ListItemText'
 import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { TBooking } from 'src/types'
 
 function Bookings() {
   const localAuth = useAuth()

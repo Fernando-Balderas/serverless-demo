@@ -1,7 +1,7 @@
-import Box from '@mui/material/Box'
-import CardContent from '@mui/material/CardContent'
 import SignOutBtn from 'src/components/SignOutBtn'
 import Bookings from 'src/features/bookings/Bookings'
+import Box from '@mui/material/Box'
+import CardContent from '@mui/material/CardContent'
 
 function Dashboard() {
   return (

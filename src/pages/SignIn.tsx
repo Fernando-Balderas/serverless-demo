@@ -1,12 +1,12 @@
+import { SyntheticEvent, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { Auth } from 'aws-amplify'
+import useAuth from 'src/hooks/useAuth'
+import useInput from 'src/hooks/useInput'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { Auth } from 'aws-amplify'
-import { SyntheticEvent, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import useAuth from 'src/hooks/useAuth'
-import useInput from 'src/hooks/useInput'
 
 function SignIn() {
   const localAuth = useAuth()
