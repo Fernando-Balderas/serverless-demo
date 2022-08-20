@@ -3,6 +3,10 @@ import { SyntheticEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import useInput from 'src/hooks/useInput'
 import { toUsername } from 'src/utils/toUsername'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 function Confirmation() {
   const history = useHistory()
@@ -26,15 +30,37 @@ function Confirmation() {
 
   return (
     <>
-      <h1>Confirmation</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" {...bindEmail} />
-        <input type="text" placeholder="Verification code" {...bindCode} />
-        <button type="submit" disabled={loading}>
+      <Box
+        component="form"
+        sx={{
+          marginTop: 8,
+          marginBottom: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Typography component="h1" variant="h5">
+          Confirmation
+        </Typography>
+        <TextField type="email" label="Email" margin="dense" {...bindEmail} />
+        <TextField
+          type="text"
+          label="Verification Code"
+          margin="dense"
+          {...bindCode}
+        />
+        <Button
+          type="submit"
+          disabled={loading}
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
           Verify account
-        </button>
+        </Button>
         <Link to="/signin">Log In &rarr;</Link>
-      </form>
+      </Box>
     </>
   )
 }

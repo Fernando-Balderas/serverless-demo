@@ -38,6 +38,7 @@ function SignIn() {
         component="form"
         sx={{
           marginTop: 8,
+          marginBottom: 1,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -66,9 +67,9 @@ function SignIn() {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Login
+          Sign In
         </Button>
-        <Link to="/signup">Create account &rarr;</Link>
+        <Link to="/signup">Create Account &rarr;</Link>
       </Box>
     </>
   )

@@ -7,6 +7,7 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
 
 function SignUp() {
   const history = useHistory()
@@ -53,6 +54,7 @@ function SignUp() {
         component="form"
         sx={{
           marginTop: 8,
+          marginBottom: 1,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -92,7 +94,10 @@ function SignUp() {
           Sign Up
           {loading && 'Loading...'}
         </Button>
-        <Link to="/signin">Log in &rarr;</Link>
+        <Stack spacing={2} direction="row">
+          <Link to="/signin">Log In &rarr;</Link>
+          <Link to="/confirmation">Verify account &rarr;</Link>
+        </Stack>
       </Box>
     </>
   )
