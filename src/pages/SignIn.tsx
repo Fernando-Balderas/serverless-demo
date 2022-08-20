@@ -50,14 +50,14 @@ function SignIn() {
         <TextField
           type="email"
           label="Email"
-          margin="normal"
+          margin="dense"
           autoFocus
           {...bindEmail}
         />
         <TextField
           type="password"
           label="Password"
-          margin="normal"
+          margin="dense"
           {...bindPassword}
         />
         <Button

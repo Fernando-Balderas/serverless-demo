@@ -1,8 +1,12 @@
 import { SyntheticEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { Auth } from 'aws-amplify'
 import useInput from 'src/hooks/useInput'
 import { toUsername } from 'src/utils/toUsername'
+import Button from '@mui/material/Button'
 
 function SignUp() {
   const history = useHistory()
@@ -45,24 +49,51 @@ function SignUp() {
 
   return (
     <>
-      <h1>SignUp</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Name" {...bindName} />
-        <input type="email" placeholder="Email" {...bindEmail} />
-        <input type="text" placeholder="Phone" {...bindPhone} />
-        <input type="text" placeholder="Company" {...bindCompany} />
-        <input type="password" placeholder="Password" {...bindPassword} />
-        <input
+      <Box
+        component="form"
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Typography component="h1" variant="h5">
+          Sign Up
+        </Typography>
+        <TextField type="text" label="Name" margin="dense" {...bindName} />
+        <TextField type="email" label="Email" margin="dense" {...bindEmail} />
+        <TextField type="text" label="Phone" margin="dense" {...bindPhone} />
+        <TextField
+          type="text"
+          label="Company"
+          margin="dense"
+          {...bindCompany}
+        />
+        <TextField
           type="password"
-          placeholder="Confirm password"
+          label="Password"
+          margin="dense"
+          {...bindPassword}
+        />
+        <TextField
+          type="password"
+          label="Confirm password"
+          margin="dense"
           {...bindConfirmPassword}
         />
-        <button type="submit" disabled={loading}>
+        <Button
+          type="submit"
+          disabled={loading}
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
           Sign Up
           {loading && 'Loading...'}
-        </button>
+        </Button>
         <Link to="/signin">Log In &rarr;</Link>
-      </form>
+      </Box>
     </>
   )
 }
