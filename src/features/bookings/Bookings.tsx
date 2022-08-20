@@ -6,6 +6,9 @@ import { removeBooking, selectBookings, setBookings } from './bookingsSlice'
 import axiosi from 'src/helpers/axios/instance'
 import { TBooking } from 'src/types'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
 
 function Bookings() {
   const localAuth = useAuth()
@@ -62,18 +65,26 @@ function Bookings() {
       <Typography component="h2" variant="h5">
         Bookings
       </Typography>
-      <button type="button" disabled={loading} onClick={handleGetAll}>
-        Get Bookings
-      </button>
-      {!showForm && (
-        <button
+      <Stack spacing={1} direction="row">
+        <Button
           type="button"
+          variant="contained"
           disabled={loading}
-          onClick={() => setShowForm(true)}
+          onClick={handleGetAll}
         >
-          New Booking
-        </button>
-      )}
+          Get Bookings
+        </Button>
+        {!showForm && (
+          <Button
+            type="button"
+            variant="contained"
+            disabled={loading}
+            onClick={() => setShowForm(true)}
+          >
+            New Booking
+          </Button>
+        )}
+      </Stack>
       {showForm && <BookingForm booking={updateBooking} hideForm={hideForm} />}
       <ul>
         {bookings.Count <= 0 && 'No bookings'}
