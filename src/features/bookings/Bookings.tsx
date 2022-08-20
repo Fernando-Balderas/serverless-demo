@@ -6,9 +6,14 @@ import { removeBooking, selectBookings, setBookings } from './bookingsSlice'
 import axiosi from 'src/helpers/axios/instance'
 import { TBooking } from 'src/types'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import IconButton from '@mui/material/IconButton'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 function Bookings() {
   const localAuth = useAuth()
@@ -86,29 +91,31 @@ function Bookings() {
         )}
       </Stack>
       {showForm && <BookingForm booking={updateBooking} hideForm={hideForm} />}
-      <ul>
+      <List>
         {bookings.Count <= 0 && 'No bookings'}
         {bookings.Count > 0 &&
           bookings.Items.map((booking) => (
-            <li key={booking.BookingId}>
-              {booking.GuestName}
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => handleUpdate(booking)}
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => handleDelete(booking.BookingId)}
-              >
-                Delete
-              </button>
-            </li>
+            <ListItem key={booking.BookingId}>
+              <ListItemText primary={booking.GuestName} />
+              <Stack spacing={1} direction="row">
+                <IconButton
+                  aria-label="edit"
+                  disabled={loading}
+                  onClick={() => handleUpdate(booking)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="delete"
+                  disabled={loading}
+                  onClick={() => handleDelete(booking.BookingId)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
+            </ListItem>
           ))}
-      </ul>
+      </List>
     </>
   )
 }
