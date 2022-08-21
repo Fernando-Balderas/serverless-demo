@@ -40,10 +40,9 @@ function SignUp() {
           'custom:company': company,
         },
       })
-      console.log('Signup successfully')
       history.push('/confirmation')
     } catch (error: any) {
-      console.warn(error.message || 'Error')
+      console.warn(error.message || 'SignUp Error')
     }
     setLoading(false)
   }
@@ -64,7 +63,13 @@ function SignUp() {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <TextField type="text" label="Name" margin="dense" {...bindName} />
+        <TextField
+          type="text"
+          label="Name"
+          margin="dense"
+          autoFocus
+          {...bindName}
+        />
         <TextField type="email" label="Email" margin="dense" {...bindEmail} />
         <TextField type="text" label="Phone" margin="dense" {...bindPhone} />
         <TextField
@@ -95,7 +100,7 @@ function SignUp() {
           {loading && 'Loading...'}
         </Button>
         <Stack spacing={2} direction="row">
-          <Link to="/signin">Log In &rarr;</Link>
+          <Link to="/signin">Sign In &rarr;</Link>
           <Link to="/confirmation">Verify account &rarr;</Link>
         </Stack>
       </Box>

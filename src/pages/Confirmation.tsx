@@ -20,10 +20,9 @@ function Confirmation() {
     setLoading(true)
     try {
       await Auth.confirmSignUp(toUsername(email), code)
-      console.log('Verified successfully')
       history.push('/signin')
     } catch (error: any) {
-      console.warn(error.message || 'Error')
+      console.warn(error.message || 'Confirmation Error')
     }
     setLoading(false)
   }
@@ -44,10 +43,16 @@ function Confirmation() {
         <Typography component="h1" variant="h5">
           Confirmation
         </Typography>
-        <TextField type="email" label="Email" margin="dense" {...bindEmail} />
+        <TextField
+          type="email"
+          label="Email"
+          margin="dense"
+          autoFocus
+          {...bindEmail}
+        />
         <TextField
           type="text"
-          label="Verification Code"
+          label="Confirmation Code"
           margin="dense"
           {...bindCode}
         />
@@ -59,7 +64,7 @@ function Confirmation() {
         >
           Verify account
         </Button>
-        <Link to="/signin">Log In &rarr;</Link>
+        <Link to="/signin">Sign In &rarr;</Link>
       </Box>
     </>
   )

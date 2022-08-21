@@ -73,7 +73,6 @@ function useAuth() {
     },
     setUser(user: UserOrNull) {
       return new Promise<void>((res) => {
-        console.log('into setUser ', user?.signInUserSession)
         setAuthed(true)
         setUser(user)
         localStorage.setItem(LOCALSTORAGE_USER, JSON.stringify(user))

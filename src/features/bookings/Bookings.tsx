@@ -32,7 +32,6 @@ function Bookings() {
         },
       })
       dispatch(setBookings(res.data))
-      console.log('response ', res.data)
     } catch (error: any) {
       console.warn(error.message || 'Error')
     }

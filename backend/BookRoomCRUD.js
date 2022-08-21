@@ -3,24 +3,24 @@ const AWS = require("aws-sdk");
 const dynamo = new AWS.DynamoDB.DocumentClient();
 const tableName = "Bookings"
 
-exports.handler = async (event, context) => {
+exports.handler = async (event, context, callback) => {
   let body;
   let statusCode = 200;
   const headers = {
     "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': '*'
+    "Access-Control-Allow-Origin": "*"
   };
 
-  // if (!event.requestContext.authorizer) {
-  //   return {
-  //     statusCode: 500,
-  //     body: JSON.stringify({
-  //       Error: 'Authorization not configured',
-  //       Reference: context.awsRequestId,
-  //     }),
-  //     headers
-  //   };
-  // }
+  if (!event.requestContext.authorizer) {
+    callback(null, {
+      statusCode: 500,
+      body: JSON.stringify({
+        Error: 'Authorization not configured',
+        Reference: context.awsRequestId,
+      }),
+      headers
+    });
+  }
 
   try {
     switch (event.httpMethod) {
@@ -40,13 +40,14 @@ exports.handler = async (event, context) => {
         break;
       case "POST":
         const bookingId = toUrlString(randomBytes(16));
-        // const username = event.requestContext.authorizer.claims['cognito:username'];
-        let requestBody = JSON.parse(event.body);
+        const username = event.requestContext.authorizer.claims['cognito:username'];
+        const requestBody = JSON.parse(event.body);
         await dynamo
           .put({
             TableName: tableName,
             Item: {
               BookingId: bookingId,
+              CognitoUser: username,
               GuestName: requestBody.GuestName,
               CheckIn: requestBody.CheckIn || new Date().toISOString(),
               CheckOut: requestBody.CheckOut || new Date().toISOString(),
@@ -61,7 +62,7 @@ exports.handler = async (event, context) => {
         };
         break;
       case "PUT":
-        let update = JSON.parse(event.body);
+        const update = JSON.parse(event.body);
         await dynamo
           .put({
             TableName: tableName,
@@ -104,11 +105,11 @@ exports.handler = async (event, context) => {
     body = JSON.stringify(body);
   }
 
-  return {
+  callback(null, {
     statusCode,
     body,
     headers
-  };
+  });
 };
 
 function toUrlString(buffer) {

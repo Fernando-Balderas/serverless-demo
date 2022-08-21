@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import useInput from 'src/hooks/useInput'
 import axiosi from 'src/helpers/axios/instance'
 import useAuth from 'src/hooks/useAuth'
@@ -21,12 +22,11 @@ type BookingFormProps = {
 function BookingForm({ booking, hideForm }: BookingFormProps) {
   const dispatch = useAppDispatch()
   const localAuth = useAuth()
+  const [loading, setLoading] = useState(false)
 
-  const {
-    value: guestName,
-    setValue: setGuestName,
-    bind: bindGuestName,
-  } = useInput(booking?.GuestName || '')
+  const { value: guestName, bind: bindGuestName } = useInput(
+    booking?.GuestName || ''
+  )
   const { value: guests, bind: bindGuests } = useInput(booking?.Guests || 1)
   const { value: rooms, bind: bindRooms } = useInput(booking?.Rooms || 1)
   const { value: checkIn, bind: bindCheckIn } = useInput(
@@ -38,8 +38,9 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
 
   const handleCreate: SubmitFn = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
-      const res = await axiosi.post(
+      const createRes = await axiosi.post(
         '/bookings',
         {
           GuestName: guestName,
@@ -54,24 +55,24 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
           },
         }
       )
-      console.log('response ', res.data)
-      const { BookingId } = res.data
-      const res2 = await axiosi.get(`/bookings/${BookingId}`, {
+      const { BookingId } = createRes.data
+      const fetchRes = await axiosi.get(`/bookings/${BookingId}`, {
         headers: {
           Authorization: localAuth.accessToken,
         },
       })
-      dispatch(pushBooking(res2.data.Item))
+      dispatch(pushBooking(fetchRes.data.Item))
     } catch (error: any) {
       console.warn(error.message || 'Error')
     }
     hideForm()
+    setLoading(false)
   }
 
   const handleUpdate: SubmitFn = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
-      setGuestName(guestName + 'Updated')
       const updatedBooking: Partial<TBooking> = {
         BookingId: booking?.BookingId,
         GuestName: guestName,
@@ -80,17 +81,17 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
         Guests: guests,
         Rooms: rooms,
       }
-      const res = await axiosi.put('/bookings', updatedBooking, {
+      await axiosi.put('/bookings', updatedBooking, {
         headers: {
           Authorization: localAuth.accessToken,
         },
       })
       dispatch(setUpdatedBooking(updatedBooking))
-      console.log('response ', res.data)
     } catch (error: any) {
       console.warn(error.message || 'Error')
     }
     hideForm()
+    setLoading(false)
   }
 
   const handleSubmit = booking === null ? handleCreate : handleUpdate
@@ -113,6 +114,7 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
         label="Guest Name"
         margin="dense"
         style={{ width: '82.3%' }}
+        autoFocus
         {...bindGuestName}
       />
       <div>
@@ -143,11 +145,12 @@ function BookingForm({ booking, hideForm }: BookingFormProps) {
           type="button"
           variant="outlined"
           color="info"
+          disabled={loading}
           onClick={() => hideForm()}
         >
           Cancel
         </Button>
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" disabled={loading}>
           Submit
         </Button>
       </Stack>

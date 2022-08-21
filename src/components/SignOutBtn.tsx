@@ -18,7 +18,7 @@ function SignOutBtn() {
       await localAuth.logout()
       history.push('/')
     } catch (error: any) {
-      console.warn(error.message || '')
+      console.warn(error.message || 'SignOut Error')
     }
     setLoading(false)
   }
