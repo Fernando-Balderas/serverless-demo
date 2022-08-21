@@ -22,6 +22,8 @@ exports.handler = async (event, context, callback) => {
     });
   }
 
+  const username = event.requestContext.authorizer.claims['cognito:username'];
+
   try {
     switch (event.httpMethod) {
       case "GET":
@@ -40,7 +42,6 @@ exports.handler = async (event, context, callback) => {
         break;
       case "POST":
         const bookingId = toUrlString(randomBytes(16));
-        const username = event.requestContext.authorizer.claims['cognito:username'];
         const requestBody = JSON.parse(event.body);
         await dynamo
           .put({
@@ -68,6 +69,7 @@ exports.handler = async (event, context, callback) => {
             TableName: tableName,
             Item: {
               BookingId: update.BookingId,
+              CognitoUser: username,
               GuestName: update.GuestName,
               CheckIn: update.CheckIn || new Date().toISOString(),
               CheckOut: update.CheckOut || new Date().toISOString(),

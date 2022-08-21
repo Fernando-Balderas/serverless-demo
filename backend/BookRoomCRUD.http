@@ -1,19 +1,42 @@
-###
+# Use a correct Cognito signInUserSession.idToken.jwtToken
+@token = 
+
+### Get all bookings
 GET https://g29v0n2xc7.execute-api.us-east-1.amazonaws.com/prod/bookings HTTP/1.1
+Authorization: {{token}}
 
-###
-GET https://g29v0n2xc7.execute-api.us-east-1.amazonaws.com/prod/bookings/a68StjSs8hd5h8s HTTP/1.1
+### Get one booking
+GET https://g29v0n2xc7.execute-api.us-east-1.amazonaws.com/prod/bookings/Jg1UTe3g_aWk3hAwYm0T6A HTTP/1.1
+Authorization: {{token}}
 
-###
+### Create booking
 POST https://g29v0n2xc7.execute-api.us-east-1.amazonaws.com/prod/bookings HTTP/1.1
+Authorization: {{token}}
 Content-Type: application/json
 
 {
     "GuestName": "username",
+    "CheckIn": "2002-08-21T11:14:00.000Z",
+    "CheckOut": "2002-08-22T11:14:00.000Z",
+    "Guests": 1,
+    "Rooms": 1
+}
+
+### Update booking
+PUT https://g29v0n2xc7.execute-api.us-east-1.amazonaws.com/prod/bookings HTTP/1.1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "BookingId": "Jg1UTe3g_aWk3hAwYm0T6A",
+    "GuestName": "username edited",
+    "CheckIn": "2002-08-21T11:14:00.000Z",
+    "CheckOut": "2002-08-24T11:14:00.000Z",
     "Guests": 4,
     "Rooms": 2
 }
 
-###
+### Delete booking
 
-DELETE https://g29v0n2xc7.execute-api.us-east-1.amazonaws.com/prod/bookings/a68StjSs8hd5h8s HTTP/1.1
+DELETE https://g29v0n2xc7.execute-api.us-east-1.amazonaws.com/prod/bookings/Jg1UTe3g_aWk3hAwYm0T6A HTTP/1.1
+Authorization: {{token}}
